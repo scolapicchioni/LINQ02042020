@@ -1,0 +1,16 @@
+C:\CM\C#\LINQ\Labs\Linq\Starter31\LinqLabs\ConsoleApp\bin\Debug\netcoreapp3.1\ConsoleApp.exe
+C:\CM\C#\LINQ\Labs\Linq\Starter31\LinqLabs\ConsoleApp\bin\Debug\netcoreapp3.1\ConsoleApp.deps.json
+C:\CM\C#\LINQ\Labs\Linq\Starter31\LinqLabs\ConsoleApp\bin\Debug\netcoreapp3.1\ConsoleApp.runtimeconfig.json
+C:\CM\C#\LINQ\Labs\Linq\Starter31\LinqLabs\ConsoleApp\bin\Debug\netcoreapp3.1\ConsoleApp.runtimeconfig.dev.json
+C:\CM\C#\LINQ\Labs\Linq\Starter31\LinqLabs\ConsoleApp\bin\Debug\netcoreapp3.1\ConsoleApp.dll
+C:\CM\C#\LINQ\Labs\Linq\Starter31\LinqLabs\ConsoleApp\bin\Debug\netcoreapp3.1\ConsoleApp.pdb
+C:\CM\C#\LINQ\Labs\Linq\Starter31\LinqLabs\ConsoleApp\bin\Debug\netcoreapp3.1\DataHelper.dll
+C:\CM\C#\LINQ\Labs\Linq\Starter31\LinqLabs\ConsoleApp\bin\Debug\netcoreapp3.1\DataHelper.pdb
+C:\CM\C#\LINQ\Labs\Linq\Starter31\LinqLabs\ConsoleApp\obj\Debug\netcoreapp3.1\ConsoleApp.csprojAssemblyReference.cache
+C:\CM\C#\LINQ\Labs\Linq\Starter31\LinqLabs\ConsoleApp\obj\Debug\netcoreapp3.1\ConsoleApp.AssemblyInfoInputs.cache
+C:\CM\C#\LINQ\Labs\Linq\Starter31\LinqLabs\ConsoleApp\obj\Debug\netcoreapp3.1\ConsoleApp.AssemblyInfo.cs
+C:\CM\C#\LINQ\Labs\Linq\Starter31\LinqLabs\ConsoleApp\obj\Debug\netcoreapp3.1\ConsoleApp.csproj.CopyComplete
+C:\CM\C#\LINQ\Labs\Linq\Starter31\LinqLabs\ConsoleApp\obj\Debug\netcoreapp3.1\ConsoleApp.dll
+C:\CM\C#\LINQ\Labs\Linq\Starter31\LinqLabs\ConsoleApp\obj\Debug\netcoreapp3.1\ConsoleApp.pdb
+C:\CM\C#\LINQ\Labs\Linq\Starter31\LinqLabs\ConsoleApp\obj\Debug\netcoreapp3.1\ConsoleApp.csproj.CoreCompileInputs.cache
+C:\CM\C#\LINQ\Labs\Linq\Starter31\LinqLabs\ConsoleApp\obj\Debug\netcoreapp3.1\ConsoleApp.genruntimeconfig.cache

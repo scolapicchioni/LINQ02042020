@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "U7CrCu8wMH9kyVVmBPzELWu/imBGHZh3Ac1nGnqmerueNM+FdubIm2HhH3PlrolmVkOLNDg/BYvwemgQP35naQ==",
+  "success": true,
+  "projectFilePath": "C:\\CM\\C#\\LINQ\\DemosLabs2020\\Labs\\Starter\\LinqLabs\\DataHelper\\DataHelper.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

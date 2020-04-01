@@ -1,0 +1,9 @@
+C:\CM\C#\LINQ\Labs\Linq\Starter31\LinqLabs\DataHelper\bin\Debug\netstandard2.0\DataHelper.deps.json
+C:\CM\C#\LINQ\Labs\Linq\Starter31\LinqLabs\DataHelper\bin\Debug\netstandard2.0\DataHelper.dll
+C:\CM\C#\LINQ\Labs\Linq\Starter31\LinqLabs\DataHelper\bin\Debug\netstandard2.0\DataHelper.pdb
+C:\CM\C#\LINQ\Labs\Linq\Starter31\LinqLabs\DataHelper\obj\Debug\netstandard2.0\DataHelper.csprojAssemblyReference.cache
+C:\CM\C#\LINQ\Labs\Linq\Starter31\LinqLabs\DataHelper\obj\Debug\netstandard2.0\DataHelper.AssemblyInfoInputs.cache
+C:\CM\C#\LINQ\Labs\Linq\Starter31\LinqLabs\DataHelper\obj\Debug\netstandard2.0\DataHelper.AssemblyInfo.cs
+C:\CM\C#\LINQ\Labs\Linq\Starter31\LinqLabs\DataHelper\obj\Debug\netstandard2.0\DataHelper.dll
+C:\CM\C#\LINQ\Labs\Linq\Starter31\LinqLabs\DataHelper\obj\Debug\netstandard2.0\DataHelper.pdb
+C:\CM\C#\LINQ\Labs\Linq\Starter31\LinqLabs\DataHelper\obj\Debug\netstandard2.0\DataHelper.csproj.CoreCompileInputs.cache
