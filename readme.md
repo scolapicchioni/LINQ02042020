@@ -7,6 +7,7 @@
 - https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/
 - https://docs.microsoft.com/en-us/dotnet/standard/using-linq
 - https://docs.microsoft.com/en-gb/samples/dotnet/try-samples/101-linq-samples/
+- https://sharplab.io/
 
 
 
