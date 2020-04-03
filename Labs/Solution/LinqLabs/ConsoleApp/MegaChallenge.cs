@@ -96,7 +96,6 @@ namespace ConsoleApp {
                 }
             }
 
-
             Console.WriteLine("*****STEP 5: FLATTEN IT OUT**************");
             var q5 = from p in q4
                      from pv in p.VendorsWithPrices
@@ -105,6 +104,8 @@ namespace ConsoleApp {
             foreach (var item in q5) {
                 Console.WriteLine($"{item.Product} - {item.Vendor} - {item.Price}");
             }
+
+
         }
     }
 }
