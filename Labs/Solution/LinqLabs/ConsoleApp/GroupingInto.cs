@@ -123,5 +123,48 @@ namespace ConsoleApp {
             }
 
         }
+
+        public static void GroupByProperty() {
+            string[] words = DataHelper.DataSource.RoyalTitleWords.ToArray();
+            /*
+             * Group the words of the royal title by initial.
+             * For each row, select a tuple with (FirstLetter, Words)
+             * where Words is the set of all the words starting with the initial in the group
+             */
+
+            IEnumerable<(char FirstLetter, IGrouping<char, string> Words)> wordGroups = from w in words
+                                                                                        orderby w
+                                                                                        group w by w[0] into g
+                                                                                        select (FirstLetter: g.Key, Words: g);
+
+            foreach (var g in wordGroups) {
+                Console.WriteLine("Words that start with the letter '{0}':", g.FirstLetter);
+                foreach (var w in g.Words) {
+                    Console.WriteLine(w);
+                }
+            }
+
+        }
+
+        public static void GroupByCategory() {
+            /*
+             * Group the buildings by category.
+             * In each resultin row select a tuple with (Category, Buildings)
+             * where Buildings is the set of the buildings for the category
+             */
+
+            IEnumerable<Building> buildings = DataSource.Buildings;
+
+            var orderGroups = from b in buildings
+                              group b by b.Category into g
+                              select (Category: g.Key, Buildings: g);
+
+            foreach (var orderGroup in orderGroups) {
+                Console.WriteLine($"Buildings in {orderGroup.Category} category:");
+                foreach (var building in orderGroup.Buildings) {
+                    Console.WriteLine($"\t{building}");
+                }
+            }
+        }
     }
 }

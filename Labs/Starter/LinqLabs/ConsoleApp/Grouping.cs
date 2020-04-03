@@ -33,8 +33,6 @@ namespace ConsoleApp {
              2) no "bike" or "bycicle" in their name
              */
 
-            //var groupedVendors = vendors.GroupBy(v => v.Name.ToLower().Contains("bike") || v.Name.ToLower().Contains("bicycle"));
-
             //IEnumerable<IGrouping<bool,Vendor>> groupedVendors = ??
 
             //Console.WriteLine("All VENDORS WITH NAME BIKE OR BICYCLE");
@@ -57,11 +55,11 @@ namespace ConsoleApp {
              * where Words is the set of all the words starting with the initial in the group
              */
 
-            //IEnumerable<(char FirstLetter, IGrouping<char, string> Words)> wordGroups = ??
+            //IEnumerable<IGrouping<char, string>> wordGroups = ??
 
             //foreach (var g in wordGroups) {
-            //    Console.WriteLine("Words that start with the letter '{0}':", g.FirstLetter);
-            //    foreach (var w in g.Words) {
+            //    Console.WriteLine("Words that start with the letter '{0}':", g.Key);
+            //    foreach (var w in g) {
             //        Console.WriteLine(w);
             //    }
             //}
@@ -77,11 +75,11 @@ namespace ConsoleApp {
 
             IEnumerable<Building> buildings = DataSource.Buildings;
 
-            //IEnumerable<(string Category, IGrouping<string, Building> Buildings)> orderGroups = ??
+            //IEnumerable<IGrouping<string, Building>> orderGroups = ??
 
             //foreach (var orderGroup in orderGroups) {
-            //    Console.WriteLine($"Buildings in {orderGroup.Category} category:");
-            //    foreach (var building in orderGroup.Buildings) {
+            //    Console.WriteLine($"Buildings in {orderGroup.Key} category:");
+            //    foreach (var building in orderGroup) {
             //        Console.WriteLine($"\t{building}");
             //    }
             //}

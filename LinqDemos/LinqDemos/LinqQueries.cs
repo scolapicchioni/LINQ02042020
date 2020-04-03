@@ -276,6 +276,11 @@ namespace LinqDemos {
 
             string[] names = { "Tom", "Dick", "Harry", "Mary", "Jay" };
 
+            IEnumerable<string> query1 = names
+                                        .Where(n=> n.Contains("a"))
+                                        .OrderBy(n=> n.Length)
+                                        .Select(n=> n.ToUpper());
+
             IEnumerable<string> query = from n in names
                                         where n.Contains("a")
                                         orderby n.Length
@@ -333,8 +338,12 @@ namespace LinqDemos {
             IEnumerable<(string Name, int Length)> query = from n in names
                         select (Name : n.ToUpper(), n.Length); //tuple, so now we know the exact type, no need to use var
 
-            foreach (var item in query) {
+            foreach ((string Name, int Length) item in query) {
                 Console.WriteLine($"The name {item.Name} is {item.Length} letters long");
+            }
+
+            foreach ((string Name, int Length) in query) {
+                Console.WriteLine($"The name {Name} is {Length} letters long");
             }
         }
 
@@ -360,7 +369,7 @@ namespace LinqDemos {
                 Console.WriteLine($"The name {item.Name} is {item.Length} letters long"); //no intellisense here!
             }
 
-            foreach (var item in methodReturningTuple()) {
+            foreach ((string Name, int Length) item in methodReturningTuple()) {
                 Console.WriteLine($"The name {item.Name} is {item.Length} letters long"); //Intellisense!
             }
         }
@@ -375,12 +384,27 @@ namespace LinqDemos {
             IEnumerable<IGrouping<string,string>> query = from n in names
                                                           group n by n.Substring(0, 1);
 
-            foreach (var grouping in query) {
+            foreach (IGrouping<string, string> grouping in query) {
                 Console.WriteLine(grouping.Key);
                 foreach (var item in grouping) {
                     Console.WriteLine("\t" + item);
                 }
             }
+            /*
+             * T
+                        Tom
+                        Tamara
+                        Tim
+                D
+                        Dick
+                        Dante
+                H
+                        Harry
+                M
+                        Mary
+                        Martha
+                        Marco
+                        */
         }
 
         public static void Ex20() {
