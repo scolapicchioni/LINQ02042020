@@ -11,9 +11,9 @@ namespace LinqDemos {
 
         public static List<Musician> GetMusicians() {
             List<Musician> beatles = new List<Musician>{ 
-	            new Musician{Name="Paul", City="Liverpool", Instruments =new List<string>{"Bass", "Guitar", "Vocals"}}, 
-	            new Musician{Name="John", City="New York", Instruments =new List<string>{"Guitar", "Piano", "Vocals"}}, 
-	            new Musician{Name="George", City="Liverpool", Instruments =new List<string>{"Guitar", "Vocals"}}, 
+	            new Musician{Name="Paul", City="Liverpool", Instruments = new List<string>{"Bass", "Guitar", "Vocals"}}, 
+	            new Musician{Name="John", City="New York", Instruments = new List<string>{"Guitar", "Piano", "Vocals"}}, 
+	            new Musician{Name="George", City="Liverpool", Instruments = new List<string>{"Guitar", "Vocals"}}, 
 	            new Musician{Name="Ringo", City="Los Angeles", Instruments = new List<string>{"Drums", "Vocals" }}
             };
             return beatles;

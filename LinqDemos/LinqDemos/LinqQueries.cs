@@ -457,7 +457,7 @@ namespace LinqDemos {
 
             var query = from n in names
                         group new { Name = n.ToUpper(), n.Length } by n.Substring(0, 1) into groupedNames
-                        select (Initial: groupedNames.Key, Items: groupedNames);
+                        select (Initial: groupedNames.Key, Items: groupedNames );
                                                                                         
             foreach (var row in query) {
                 Console.WriteLine($"{row.Initial}");
@@ -686,9 +686,17 @@ namespace LinqDemos {
                      on c.Id equals d.CarId
                      select new { d.Name, c.Brand, c.Model };
 
+            var q2 = from c in cars
+                     join d in drivers
+                     on c.Id equals d.CarId
+                     select new { Car = c, Driver = d };
+
+
             foreach (var item in q1) {
                 Console.WriteLine(item.Name + " drives " + item.Brand + " " + item.Model);
             }
+
+            
 
         }
 
@@ -921,7 +929,32 @@ namespace LinqDemos {
             */
 
 
-            List<Car> cars = Car.GetCars();
+            int[] numbers = new int[] { 1, 2, 3 };
+            string[] letters = new string[] { "a","b","c" };
+
+
+            var q = from n in numbers
+                    from l in letters
+                    select new { n, l };
+
+            /*
+             *  1 - a
+                1 - b
+                1 - c
+                2 - a
+                2 - b
+                2 - c
+                3 - a
+                3 - b
+                3 - c
+
+                 */
+
+            foreach (var item in q) {
+                Console.WriteLine($"{item.n} - {item.l}");
+            }
+
+            List < Car > cars = Car.GetCars();
 
             List<Driver> drivers = Driver.GetDrivers();
 
@@ -1004,6 +1037,18 @@ namespace LinqDemos {
             foreach (var musician in musiciansandinstrumentsflattened) {
                 Console.WriteLine(musician.Name + " plays " + musician.Instrument);
             }
+            /*
+             *  Paul plays Bass
+                Paul plays Guitar
+                Paul plays Vocals
+                John plays Guitar
+                John plays Piano
+                John plays Vocals
+                George plays Guitar
+                George plays Vocals
+                Ringo plays Drums
+                Ringo plays Vocals
+            */
         }
 
         public static void Ex35() {
@@ -1056,15 +1101,35 @@ namespace LinqDemos {
 
             IEnumerable<(Car Car, Driver Driver)> q1 = 
                 from c in cars
+
                 join d in drivers
                 on c.Id equals d.CarId
                 into driversforcar
+
                 from driverforcar in driversforcar.DefaultIfEmpty(new Driver() { Name = "No", Surname = "Driver" })
-                select (Car: c, Driver: driverforcar );
+                
+                select (Car: c, Driver: driverforcar);
 
             foreach (var item in q1) {
                 Console.WriteLine(item.Car + " " + item.Driver);
             }
+            /*
+             *  1 Alfa Romeo 147 15000 0 - No Driver
+                2 Alfa Romeo MiTo 16000 2 - Bob Builders
+                2 Alfa Romeo MiTo 16000 6 - Frank Funnel
+                2 Alfa Romeo MiTo 16000 7 - Donald Trump
+                8 Alfa Romeo Giulietta 11000 0 - No Driver
+                3 Audi A3 22000 0 - No Driver
+                4 Audi A2 23000 4 - Marco Danielson
+                4 Audi A2 23000 5 - Giulia Conte
+                4 Audi A2 23000 9 - Kyle Korelson
+                9 Audi A1 20000 3 - Candice Clarkson
+                5 Citroen C1 11000 1 - Alice Anderson
+                5 Citroen C1 11000 8 - Stan Lee
+                6 Citroen C2 13000 0 - No Driver
+                7 FIAT 500 14000 0 - No Driver
+                10 FIAT Panda 9000 0 - No Driver
+             */
         }
 
         // go to the labs and try SelectMany

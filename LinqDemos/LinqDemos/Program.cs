@@ -3,7 +3,7 @@
 namespace LinqDemos {
     class Program {
         static void Main(string[] args) {
-            LinqQueries.Ex19();
+            LinqQueries.Ex36();
             Console.ReadLine();
         }
     }
