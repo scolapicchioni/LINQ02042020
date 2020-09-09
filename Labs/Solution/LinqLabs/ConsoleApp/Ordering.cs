@@ -73,7 +73,7 @@ namespace ConsoleApp {
 
             IEnumerable<decimal> sortedPrices = 
                 from d in buildings
-                orderby d descending
+                orderby d.Price descending
                 select d.Price;
 
             Console.WriteLine("The prices from highest to lowest:");

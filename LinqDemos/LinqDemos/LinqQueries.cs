@@ -55,7 +55,7 @@ namespace LinqDemos {
             int maxItem1 = pairs.Max(n => n.Item1); 
             int minItem2 = pairs.Min(n => n.Item2);
             double AverageSum = pairs.Average(n => n.Item1 + n.Item2);
-            int countOddSums = pairs.Count(n => (n.Item1 + n.Item2) % 2 == 0);
+            int countEvenSums = pairs.Count(n => (n.Item1 + n.Item2) % 2 == 0);
 
             int multiply = numbers.Aggregate((n1, n2) => n1 * n2);
         }
@@ -80,10 +80,11 @@ namespace LinqDemos {
             //some accept an input sequence and output one element:
             int[] numbers = { 5, 1, 6, 2, 8, 3, 9, 4, 0, 5 };
             int first = numbers.First();
-            int firstEven = numbers.First(n => n % 2 == 0);
+            int firstEven = numbers.First(n => n % 2 == 0); // select the item. throws if item not found
+            int firstEven2 = numbers.FirstOrDefault(n => n % 2 == 0); // select the item. returns default value if item not found
             int last = numbers.Last();
             int lastEven = numbers.Last(n => n % 2 == 0);
-            int zero = numbers.Single(n => n == 0);
+            int zero = numbers.Single(n => n == 0); //// select the item. throws if multiple items found
         }
 
         //go to the labs, try ElementOperations
@@ -162,7 +163,7 @@ namespace LinqDemos {
 
             //or dictionary
             Dictionary<string, int> doublesAsDictionary = doubles.ToDictionary(n=>n.ToString());
-            Console.WriteLine(doublesAsDictionary["4"]); ;
+            Console.WriteLine(doublesAsDictionary["4"]);
 
             //if your collection contains different types, you can filter by type
 
@@ -253,19 +254,24 @@ namespace LinqDemos {
 
             string[] names = { "Tom", "Dick", "Harry", "Mary", "Jay" };
             IEnumerable<string> query =
-                names.Where(n => {
+                names
+                .Where(n =>
+                {
                     Console.WriteLine($"\tWHERE {n}");
                     return n.Contains("a");
-                }).OrderBy(n => {
+                })
+                .OrderBy(n =>
+                {
                     Console.WriteLine($"\t\tORDERBY {n}");
                     return n.Length;
-                }).Select(n => {
+                })
+                .Select(n => {
                     Console.WriteLine($"\t\t\tSELECT {n}");
                     return n.ToUpper();
                 });
 
             foreach (string name in query) {
-                Console.WriteLine(name);
+                Console.WriteLine($"foreach: {name}");
             }
         }
 
@@ -347,14 +353,32 @@ namespace LinqDemos {
             }
         }
 
+        class NameLength {
+            public int Length { get; set; }
+            public string Name { get; set; }
+        }
+
         public static void Ex18() {
             //tuples are handy for method results:
+
+            IEnumerable<NameLength> methodReturningSpecificType()
+            { //either we use dynamic or object as a return type
+                string[] names = { "Tom", "Dick", "Harry", "Mary", "Jay" };
+
+                return from n in names
+                       select new NameLength() { Name = n.ToUpper(),Length = n.Length }; //anonymous class, that's why we use var
+            }
+
+            foreach (NameLength item in methodReturningSpecificType())
+            {
+                Console.WriteLine($"The name {item.Name} is {item.Length} letters long"); //no intellisense here!
+            }
 
             dynamic methodReturningAnonType() { //either we use dynamic or object as a return type
                 string[] names = { "Tom", "Dick", "Harry", "Mary", "Jay" };
 
                 return from n in names
-                            select new { Name = n.ToUpper(), n.Length }; //anonymous class, that's why we use var
+                       select new { Name = n.ToUpper(), n.Length }; //anonymous class, that's why we use var
             }
 
             IEnumerable <(string Name, int Length)> methodReturningTuple() { //now we can declare the exact shape we're returning
@@ -372,6 +396,12 @@ namespace LinqDemos {
             foreach ((string Name, int Length) item in methodReturningTuple()) {
                 Console.WriteLine($"The name {item.Name} is {item.Length} letters long"); //Intellisense!
             }
+
+            string[] names = { "Tom", "Dick", "Harry", "Mary", "Jay" };
+
+            foreach (string description in names.Select((n, position) => $"The item {n} is at position {position}")) {
+                Console.WriteLine(description);
+            }
         }
 
         //go to the Labs and try Projections
@@ -383,6 +413,9 @@ namespace LinqDemos {
             string[] names = { "Tom", "Dick", "Harry", "Mary", "Jay", "Tamara", "Tim", "Dante", "Martha", "Marco", "John", "James" };
             IEnumerable<IGrouping<string,string>> query = from n in names
                                                           group n by n.Substring(0, 1);
+
+            //translated as:
+            IEnumerable<IGrouping<string, string>> query2 = names.GroupBy(n => n.Substring(0, 1));
 
             foreach (IGrouping<string, string> grouping in query) {
                 Console.WriteLine(grouping.Key);
@@ -405,6 +438,8 @@ namespace LinqDemos {
                         Martha
                         Marco
                         */
+
+            
         }
 
         public static void Ex20() {
@@ -467,6 +502,32 @@ namespace LinqDemos {
             }
         }
 
+        public static void Ex22a()
+        {
+            //you can also save your query into a new variable, 
+            //so that you can select a different shape if you don't like the grouping
+
+            /*
+                                                        select
+                                                       /      \
+            from -------------------------------------<        > [into]----
+                                          ^           \        /          |
+                                          |            group by           |
+                                          |                               |
+                                          ---------------------------------
+            */
+
+            string[] names = { "Tom", "Dick", "Harry", "Mary", "Jay", "Tamara", "Tim", "Dante", "Martha", "Marco", "Mitch", "Tod", "John", "James" };
+
+            var query = from n in names
+                        group new { Name = n.ToUpper(), n.Length } by n.Substring(0, 1) into groupedNames
+                        select (Initial: groupedNames.Key, LengthOfLongestName: groupedNames.Max(names => names.Length));
+
+            foreach (var row in query)
+            {
+                Console.WriteLine($"{row.Initial} {row.LengthOfLongestName}");
+            }
+        }
 
         //go to the Labs and try GroupingInto
 
@@ -606,6 +667,20 @@ namespace LinqDemos {
             foreach (var item in q3) {
                 Console.WriteLine(item);
             }
+
+            //another example where the let is used to store the length of the name in each group, so that
+            //we can then also select the first anem of the group whose length is the same as the one we just stored
+
+
+            var query = from n in names
+                        group new { Name = n.ToUpper(), n.Length } by n.Substring(0, 1) into groupedNames
+                        let LengthOfLongestName = groupedNames.Max(names => names.Length)
+                        select (Initial: groupedNames.Key, LengthOfLongestName, LongestName: groupedNames.First(names => names.Length == LengthOfLongestName));
+            foreach (var item in query)
+            {
+                Console.WriteLine($"{item.Initial} - {item.LongestName} - {item.LengthOfLongestName}");
+            }
+
 
         }
 
@@ -990,8 +1065,10 @@ namespace LinqDemos {
             List<Driver> drivers = Driver.GetDrivers();
 
             var query = from d in drivers
+
                         from c in cars
                         where d.CarId != c.Id //we get the drivers connected to the cars they DON'T drive
+                        
                         select new { c, d };
             foreach (var item in query) {
                 Console.WriteLine($"{item.d.Name} {item.d.Surname} DOES NOT DRIVE {item.c.Brand} {item.c.Model}");
