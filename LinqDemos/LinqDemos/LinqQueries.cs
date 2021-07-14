@@ -60,6 +60,11 @@ namespace LinqDemos {
             int multiply = numbers.Aggregate((n1, n2) => n1 * n2);
         }
 
+        public static void Ex04b() {
+            IEnumerable<Car> cars = Enumerable.Where(Car.GetCars(), c => c.Price > 10000);
+            decimal maxPrice = cars.Max(c => c.Price);
+        }
+
         //go to the labs, try AggregateOperators
 
         public static void Ex05() {
@@ -211,25 +216,24 @@ namespace LinqDemos {
             //is consumed by a foreach
             List<int> numbers = new List<int> { 1, 2, 3 };
 
-            IEnumerable<int> result = numbers.Where(n => {
+            IEnumerable<int> query = numbers.Where(n => {
                 Console.WriteLine($"\tWHERE {n}");
                 return n % 2 == 0;
             });
 
             //without the foreach, we don't see anything on screen
 
-            foreach (var n in result) {
-                Console.WriteLine(n);
-            }
+            //foreach (var n in result) {
+            //    Console.WriteLine(n);
+            //}
 
             //if we add a new item in the list and then we execute the foreach,
             //we will find the new item in the result 
 
-            //numbers.Add(4);
-            //foreach (var n in result)
-            //{
-            //    Console.WriteLine(n);
-            //}
+            numbers.Add(4);
+            foreach (var n in query) {
+                Console.WriteLine(n);
+            }
         }
 
         public static void Ex12() {
@@ -491,7 +495,7 @@ namespace LinqDemos {
             string[] names = { "Tom", "Dick", "Harry", "Mary", "Jay", "Tamara", "Tim", "Dante", "Martha", "Marco", "Mitch", "Tod", "John", "James" };
 
             var query = from n in names
-                        group new { Name = n.ToUpper(), n.Length } by n.Substring(0, 1) into groupedNames
+                        group new { Name = n.ToUpper(), n.Length } by n.Substring(0, 1) into groupedNames //new range variable
                         select (Initial: groupedNames.Key, Items: groupedNames );
                                                                                         
             foreach (var row in query) {
@@ -646,7 +650,7 @@ namespace LinqDemos {
             //but this is not readable and also not performant
             //with the let keyword we can introduce a new range variable (novowel, in this case)
             var q2 = from n in names
-                     let novowel = n.Replace("a", "").Replace("e", "").Replace("i", "").Replace("o", "").Replace("u", "")
+                     let novowel = n.Replace("a", "").Replace("e", "").Replace("i", "").Replace("o", "").Replace("u", "") //range variable
                      where novowel.Length > 3
                      select novowel;
 
