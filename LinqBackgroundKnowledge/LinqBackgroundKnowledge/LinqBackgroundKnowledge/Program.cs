@@ -1,233 +1,53 @@
-﻿using System;
+﻿using LinqBackgroundKnowledge.Extensions;
+using LinqBackgroundKnowledge.Models;
+using System;
 using System.Collections.Generic;
-using ExtensionsNameSpace;
-using System.Linq;
+
 namespace LinqBackgroundKnowledge {
     class Program {
         static void Main(string[] args) {
-            FilterExample2();
+            // Our goal is to manipulate data:
+            // Go from a set of items to a different set of items.
+            // Examples
+            // 1 - from a collection of cars to only the expensive cars (filter)
+            // 2 - from a collection of games to only the game names (change the shape of the output)
+            // We want to be able to work on any sort of collections (Arrays, Lists, Queues, Stacks, Sets...)
+            // We want to be able to filter by any condition
+            // We want to be able to select any kind of shape
+            // We want to be able to construct a query by chaining multiple statements
 
-        }
 
-        private static void FilterExample() {
             List<Car> cars = new List<Car>() {
-                new Car() { Id = 1, Brand="FIAT", Name = "Punto", Price = 12345 },
-                new Car() { Id = 2, Brand="FIAT", Name = "500", Price = 9345 },
-                new Car() { Id = 3, Brand="Audi", Name = "A2", Price = 52345 },
-                new Car() { Id = 4, Brand="Audi", Name = "A3", Price = 32345 }
+                new(){Id = 1, Brand = "FIAT", Name = "Punto", Price = 12_345},
+                new(){Id = 2, Brand = "Audi", Name = "A3", Price = 23_345}
             };
-
-            List<Car> fiats = FilterWhereBrandIsFIAT(cars);
-
-            /*
-               1 - Punto - FIAT - ? 12.345
-               2 - 500 - FIAT - ? 9.345
-             */
-            foreach (var item in fiats) {
+            var query1 = cars.Where(c => c.Price > 20_000);
+            foreach (var item in query1) {
                 Console.WriteLine(item);
             }
 
-
-            List<Car> expensive = FilterWherePriceGreaterThan15_000(cars);
-
-            /*
-             3 - A2 - Audi - ? 52.345
-             4 - A3 - Audi - ? 32.345
-             */
-            foreach (var item in expensive) {
-                Console.WriteLine(item);
-            }
-        }
-
-        private static void FilterExample2() {
-            List<Car> cars = new List<Car>() {
-                new Car() { Id = 1, Brand="FIAT", Name = "Punto", Price = 12345 },
-                new Car() { Id = 2, Brand="FIAT", Name = "500", Price = 9345 },
-                new Car() { Id = 3, Brand="Audi", Name = "A2", Price = 52345 },
-                new Car() { Id = 4, Brand="Audi", Name = "A3", Price = 32345 }
+            List<Game> games = new List<Game>() {
+                new Game() {Id = 1, GameName = "WOW", Genre = "RPG", Year = 2003},
+                new Game() {Id = 2, GameName = "Carto", Genre = "Puzzle", Year = 2021},
+                new Game() {Id = 3, GameName = "Sea of Thieves", Genre = "Adventure", Year = 2018}
             };
-
-            //List<Car> fiats = Filter(cars, IsBrandFiat);
-
-            IEnumerable<Car> fiats = cars.Filter(IsBrandFiat);
-
-
-            /*
-               1 - Punto - FIAT - ? 12.345
-               2 - 500 - FIAT - ? 9.345
-             */
-            foreach (var item in fiats) {
+            var query2 = games.Select(g => new { Name = g.GameName, g.Year });
+            foreach (var item in query2) {
                 Console.WriteLine(item);
             }
 
+            string[] words = new string[] { "some", "word", "in", "my", "list", "abracadabra", "supercalifragilistisomething" };
+            var resultingItems = words.Where(w => w.Length > 4).Select(w => new { w.Length, Word = w });
 
-            IEnumerable<Car> expensive = MyExtensions.Filter(cars, IsPriceGreaterThan15_000);
-
-            /*
-             3 - A2 - Audi - ? 52.345
-             4 - A3 - Audi - ? 32.345
-             */
-            foreach (var item in expensive) {
-                Console.WriteLine(item);
+            foreach (var item in resultingItems) {
+                Console.WriteLine($"{item.Word} is {item.Length} letters long.");
             }
 
-            List<int> numbers = new List<int>() { 1, 3, 6, 3, 6, 89, 5, 5, 2 };
-            IEnumerable<int> evenNumbers = numbers.Filter(isNumberEven);
-
-            string x = "a B c d E f g h";
-
-            IEnumerable<char> res = x.Filter(checkLetter);
-            foreach (char item in res) {
-                Console.WriteLine(item);
-            }
-
-            Action action = () => { 
-                Console.WriteLine("oh HI!");
-                Console.WriteLine("oh HI again!");
-            };
-
-            Action action2 = () => Console.WriteLine("oh HI!");
-
-            Action<Car> action3 = (c) => {
-                Console.WriteLine(c);
-            };
-
-            action3(new Car() { Id = 3 });
-
-            IEnumerable<int> numbersGreaterThan3 = numbers.Filter(n => n > 3);
-
-            IEnumerable<char> res2 = x.Filter( n => Char.IsUpper(n) );
-
-            IEnumerable<int> query = x.Select(c=>(int)c);
-
-            var queryForBrand = cars.Select(c => new { Brand = c.Brand, LenghtOfTheBrand = c.Brand.Length });
-
-            var bla = "";
-            //bla = 3;
-
-            var myAnonObject = new { SomeProperty = "some value", AnIntProperty = 5, ABoolProperty = false };
-
-            
-            foreach (var item in queryForBrand) {
-                Console.WriteLine(item.LenghtOfTheBrand); 
-            }
-
-            //(string SomeProperty, int AnIntProperty, bool ABoolProperty) = ( SomeProperty : "some value", AnIntProperty : 5, ABoolProperty : false );
-
-
-            IEnumerable<(string Brand, int LenghtOfTheBrand)> queryForBrandTuple = cars.Select(c => (Brand : c.Brand, LenghtOfTheBrand : c.Brand.Length ));
-            foreach (var (item1,item2) in queryForBrandTuple) {
-                //Console.WriteLine(item);
-
-            }
-
-            foreach (var item in TheQuery()) {
-                Console.WriteLine(item.LenghtofTheBrand); 
-            }
-
-            foreach (var item in TheQuery2()) {
-                Console.WriteLine(item.LenghtOfTheBrand);
-            }
-
+            // In order to achieve that we need some language construct that can help us.
+            // First, Learn about IEnumerables by cheching the IEnumerables demos
+            // Second, learn about generics by checking the Generics Demos 
+            // Third, learn about delegates by checking the Filter Demos
+            // Last, learn about the anonymous types by checking the Select Demos
         }
-
-        public static IEnumerable<dynamic> TheQuery() {
-            List<Car> cars = new List<Car>() {
-                new Car() { Id = 1, Brand="FIAT", Name = "Punto", Price = 12345 },
-                new Car() { Id = 2, Brand="FIAT", Name = "500", Price = 9345 },
-                new Car() { Id = 3, Brand="Audi", Name = "A2", Price = 52345 },
-                new Car() { Id = 4, Brand="Audi", Name = "A3", Price = 32345 }
-            };
-
-            return cars.Select(c => new { Brand = c.Brand, LenghtOfTheBrand = c.Brand.Length });
-
-        }
-
-
-        public static IEnumerable<(string Brand, int LenghtOfTheBrand)> TheQuery2() {
-            List<Car> cars = new List<Car>() {
-                new Car() { Id = 1, Brand="FIAT", Name = "Punto", Price = 12345 },
-                new Car() { Id = 2, Brand="FIAT", Name = "500", Price = 9345 },
-                new Car() { Id = 3, Brand="Audi", Name = "A2", Price = 52345 },
-                new Car() { Id = 4, Brand="Audi", Name = "A3", Price = 32345 }
-            };
-
-            return cars.Select(c => (Brand : c.Brand, LenghtOfTheBrand : c.Brand.Length) );
-
-        }
-
-
-        public static void myMethodWithACar(Car bshjkfbhsjk) { 
-            
-        }
-
-        private static void m() {
-            Console.WriteLine("oh HI!");
-        }
-
-        public static bool checkLetter(char letter) {
-            return !Char.IsWhiteSpace(letter);
-        }
-
-        public static bool isNumberEven (int item){
-            return item % 2 == 0;
-        }
-        
-
-        public static List<Car> FilterWhereBrandIsFIAT(List<Car> cars) {
-            List<Car> result = new List<Car>();
-            foreach (Car car in cars) {
-                if (IsBrandFiat(car)) {
-                    result.Add(car);
-                }
-            }
-            return result;
-        }
-
-        
-
-        public static List<Car> FilterWherePriceGreaterThan15_000(List<Car> cars) {
-            List<Car> result = new List<Car>();
-            foreach (Car car in cars) {
-                if (IsPriceGreaterThan15_000(car)) {
-                    result.Add(car);
-                }
-            }
-            return result;
-        }
-
-        private static bool IsBrandFiat(Car car) {
-            return car.Brand == "FIAT";
-        }
-
-        private static bool IsPriceGreaterThan15_000(Car car) {
-            return car.Price > 15_000;
-        }
-
-
-
-        public static void DelegatesExample() {
-            
-
-            void myMethod01() {
-                Console.WriteLine("I'm in method1 now!");
-            }
-
-            //Action doStuff = myMethod01;
-
-            //myMethod01();
-
-            //doStuff();
-
-            AMethodThatRequiresAnAction(myMethod01);
-        }
-
-        public static void AMethodThatRequiresAnAction(Action theMethodToInvoke) {
-            Console.WriteLine("the beginning of my method");
-            theMethodToInvoke();
-            Console.WriteLine("the rest of my method");
-        }
-
-        
     }
 }
