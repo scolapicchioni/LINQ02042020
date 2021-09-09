@@ -6,7 +6,7 @@ using System.Linq;
 namespace ConsoleApp {
     class Program {
         static void Main(string[] args) {
-            MegaChallenge.OMG();
+            Generators.RepeatEnemy();
             Console.ReadLine();
         }
 

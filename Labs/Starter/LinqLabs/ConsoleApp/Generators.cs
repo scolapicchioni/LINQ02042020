@@ -8,7 +8,7 @@ namespace ConsoleApp {
     public static class Generators {
         public static void RangeOfIntegers() {
             /*
-             * Select the odd numbers between 50 (included) and 100 (excluded)
+             * Select the even numbers between 50 (included) and 100 (excluded)
              */
 
             //IEnumerable<int> numbersBetween50And100 = ??

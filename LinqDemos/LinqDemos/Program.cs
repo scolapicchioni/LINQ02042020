@@ -1,10 +1,4 @@
-﻿using System;
+﻿using LinqDemos;
 
-namespace LinqDemos {
-    class Program {
-        static void Main(string[] args) {
-            LinqQueries.Ex01();
-            Console.ReadLine();
-        }
-    }
-}
+LinqQueries.Ex09();
+Console.ReadLine();
