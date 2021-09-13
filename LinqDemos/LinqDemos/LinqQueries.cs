@@ -160,7 +160,7 @@ public static class LinqQueries {
             }
         }
 
-        //with exeptby, we don't get dave grohl because his name is in both groups
+        //with exceptby, we don't get dave grohl because his name is in both groups
         IEnumerable<Musician> nirvanaExceptMusiciansWhoseNameIsInFooFighters = nirvana.ExceptBy(fooFighters.Select(m => m.Name), m => m.Name);
         Console.WriteLine("nirvanaExceptMusiciansWhoseNameIsInFooFighters");
         foreach (var musician in nirvanaExceptMusiciansWhoseNameIsInFooFighters) {
