@@ -5,7 +5,7 @@ namespace ConsoleApp;
 
 class Program {
     static void Main() {
-        AggregateOperatorsExercises();
+        //AggregateOperatorsExercises();
 
         //QuantifierExercises();
         //ElementOperationExercises();
@@ -22,8 +22,28 @@ class Program {
 
         //MegaChallenge.OMG();
 
+        FoodForThoughtExercises();
 
         Console.ReadLine();
+    }
+
+    private static void FoodForThoughtExercises() {
+        IEnumerable<ProductViewModel> result = FoodForThoughtQueries.GetFFTProductViewModels();
+        foreach (var product in result) {
+            Console.WriteLine(product);
+            Console.WriteLine("Soorten Brood:");
+            foreach (var brood in product.SoortenBrood) {
+                Console.WriteLine($"\t{brood}");
+            }
+            Console.WriteLine("Extras:");
+            foreach (var extra in product.Extras) {
+                Console.WriteLine($"\t{extra}");
+            }
+        }
+
+        string printProductViewModel (ProductViewModel product) {
+            return $"{product.Id} {product.Name} {product.CategoryName} {product.IsGeschiktVoor} {product.IsGlutenVrij}";
+        }
     }
 
     private static void LeftJoinExercises() {

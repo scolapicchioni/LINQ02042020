@@ -48,8 +48,7 @@ namespace ConsoleApp {
          * */
 
         public static void Day01() {
-            string input = 
-@"1000
+            string input = $@"1000
 2000
 3000
 
@@ -63,7 +62,7 @@ namespace ConsoleApp {
 9000
 
 10000";
-​
+            
             var caloriesForTopElves =
                 from elf in input.Split(Environment.NewLine + Environment.NewLine)
                 let calories = elf.Split(Environment.NewLine)
@@ -71,11 +70,10 @@ namespace ConsoleApp {
                                   .Sum()
                 orderby calories descending
                 select calories;
-            ​
+            
             var part1 = caloriesForTopElves.First();
             var part2 = caloriesForTopElves.Take(3).Sum();
-            ​
-            Console.WriteLine($"part1 = {part1}");
+            Console.WriteLine($"part1 = {part1}"); 
             Console.WriteLine($"part2 = {part2}");
         }
 
@@ -113,13 +111,13 @@ namespace ConsoleApp {
         */
         public static void Day06() {
             string input = "nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg";
-​
+            
             int part1 = GetStartMarker(4);
             int part2 = GetStartMarker(14);
-​
+            
             Console.WriteLine($"part 1 = {part1}");
             Console.WriteLine($"part 2 = {part2}");
-​
+
             int GetStartMarker(int A) {
                 return Enumerable.Range(A, input.Length - A)
                 .First(i => input[(i - A)..i].Distinct().Count() == A);

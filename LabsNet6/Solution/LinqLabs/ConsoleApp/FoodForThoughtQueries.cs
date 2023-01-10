@@ -45,7 +45,7 @@ namespace ConsoleApp {
             IEnumerable<Categorie> allowedCategories = GetFFTCategories();
             IEnumerable<string> ids = allowedCategories.SelectMany(c => c.Extras).Distinct();
 
-            return extrasFromMilliways.IntersectBy(ids, x => x.Id);
+            return extrasFromMilliways.IntersectBy(ids, x => x.Id).ToList();
         }
         // 4.
         // write a method that returns 
@@ -62,7 +62,7 @@ namespace ConsoleApp {
 
             IEnumerable<string> ids = allowedProducts.SelectMany(p => p.SoortenBrood ?? Array.Empty<string>()).Distinct();
 
-            return soortenBroodFromMilliways.IntersectBy(ids, p => p.Id);
+            return soortenBroodFromMilliways.IntersectBy(ids, p => p.Id).ToList();
         }
         //5.
         // Write a query tht returns all the ProductViewModel
@@ -76,23 +76,35 @@ namespace ConsoleApp {
             IEnumerable<ProductViewModel> result = from p in products
                     join c in categories
                     on p.Categorie equals c.Id
+                    orderby c.Naam, p.Naam
                     select new ProductViewModel() 
-                    { Id = p.Id, Name = p.Naam, IsGeschiktVoor = p.IsGeschiktVoor, IsGlutenVrij = p.IsGlutenVrij, CategoryName = c.Naam ,
-                        SoortenBrood = (from b in p.SoortenBrood
-                                       join bt in breadTypes
-                                       on b equals bt.Id
-                                       select new ProductViewModel() {
-                                           Id = b, Name = bt.Naam, CategoryName = categories.First(c => c.Id == bt.Categorie).Naam, IsGeschiktVoor = bt.IsGeschiktVoor, IsGlutenVrij = bt.IsGlutenVrij
-                                       }).ToArray(),
-                        Extras = (from e in c.Extras
+                    { 
+                        Id = p.Id, 
+                        Name = p.Naam, 
+                        IsGeschiktVoor = p.IsGeschiktVoor, 
+                        IsGlutenVrij = p.IsGlutenVrij, 
+                        CategoryName = c.Naam,
+                        SoortenBrood = (from b in p.SoortenBrood ?? Array.Empty<string>()
+                                        join bt in breadTypes
+                                        on b equals bt.Id
+                                        select new ProductViewModel() {
+                                            Id = b,
+                                            Name = bt.Naam,
+                                            IsGeschiktVoor = bt.IsGeschiktVoor,
+                                            IsGlutenVrij = bt.IsGlutenVrij
+                                        }).ToArray(),
+                        Extras = (from e in c.Extras ?? Array.Empty<string>()
                                   join ex in extras
                                   on e equals ex.Id
                                   select new ProductViewModel() {
-                                      Id = e, Name = ex.Naam, CategoryName = categories.First(c => c.Id == ex.Categorie).Naam, IsGeschiktVoor = ex.IsGeschiktVoor, IsGlutenVrij = ex.IsGlutenVrij
+                                      Id = e,
+                                      Name = ex.Naam,
+                                      IsGeschiktVoor = ex.IsGeschiktVoor,
+                                      IsGlutenVrij = ex.IsGlutenVrij
                                   }).ToArray()
                     };
 
-            return result;
+            return result.ToList();
         }
     }
 
@@ -104,5 +116,9 @@ namespace ConsoleApp {
         public string IsGeschiktVoor { get; set; } = string.Empty;
         public ProductViewModel[]? SoortenBrood { get; set; }
         public ProductViewModel[]? Extras { get; set; }
+
+        public override string ToString() {
+            return $"{Id} {Name} {CategoryName} {IsGeschiktVoor} {IsGlutenVrij}";
+        }
     }
 }
