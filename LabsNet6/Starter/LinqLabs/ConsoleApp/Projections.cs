@@ -89,7 +89,7 @@ public static class Projections {
         //}
     }
 
-    static void SelectNewAnonymous() {
+    public static void SelectNewAnonymous() {
         IEnumerable<Employee> employees = DataSource.Employees;
 
         /*
@@ -106,7 +106,7 @@ public static class Projections {
         //}
     }
 
-    static void SelectTuple() {
+    public static void SelectTuple() {
         IEnumerable<Employee> employees = DataSource.Employees;
 
         /*

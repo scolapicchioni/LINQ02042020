@@ -207,8 +207,10 @@ public static class AggregateOperators {
          * List its name and the number of times he rolled a dice
          */
 
-        var diceCounts = from p in players
-                         select (p.Name, RollCount: p.DiceRolls.Count() * 2);
+        //var diceCounts = from p in players
+        //                 select (p.Name, RollCount: p.DiceRolls.Count() * 2);
+
+        var diceCounts = players.Select(p=> (p.Name, RollCount: p.DiceRolls.Count() * 2));
 
         foreach (var player in diceCounts) {
             Console.WriteLine($"Name: {player.Name}, count: {player.RollCount}");

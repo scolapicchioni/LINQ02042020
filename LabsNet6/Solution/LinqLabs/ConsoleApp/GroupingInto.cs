@@ -12,8 +12,8 @@ public static class GroupingInto {
         IEnumerable<Building> buildings = DataSource.Buildings;
 
         IEnumerable<(string Category, decimal MostExpensivePrice)> categories = from b in buildings
-                                                                                group b by b.Category into g
-                                                                                select (Category: g.Key, MostExpensivePrice: g.Max(p => p.Price));
+                                                                                group b.Price by b.Category into pricesByCategory
+                                                                                select (Category: pricesByCategory.Key, MostExpensivePrice: pricesByCategory.Max());
 
         foreach (var c in categories) {
             Console.WriteLine($"Category: {c.Category} Most expensive price: {c.MostExpensivePrice}");
@@ -30,8 +30,8 @@ public static class GroupingInto {
 
         IEnumerable<(string Category, decimal AveragePrice)> categories =
             from b in buildings
-            group b by b.Category into g
-            select (Category: g.Key, AveragePrice: g.Average(b => b.Price));
+            group b.Price by b.Category into pricesByCategory
+            select (Category: pricesByCategory.Key, AveragePrice: pricesByCategory.Average());
 
         foreach (var c in categories) {
             Console.WriteLine($"Category: {c.Category}, Average price: {c.AveragePrice:C}");
@@ -48,8 +48,8 @@ public static class GroupingInto {
 
         IEnumerable<(int Year, int Count)> yearCount =
             from e in employees
-            group e by e.BirthDate.Year into g
-            select (Year: g.Key, Count: g.Count());
+            group e by e.BirthDate.Year into employeesByYearOfBirth
+            select (Year: employeesByYearOfBirth.Key, Count: employeesByYearOfBirth.Count());
 
         foreach (var e in yearCount) {
             Console.WriteLine($"Year: {e.Year}: Count: {e.Count}");
@@ -108,9 +108,9 @@ public static class GroupingInto {
          */
 
         var buildingGroups = from b in buildings
-                             group b by b.Category into g
-                             where g.All(p => p.SquareMeters > 0)
-                             select (Category: g.Key, Buildings: g);
+                             group b by b.Category into buildingsByCategory
+                             where buildingsByCategory.All(p => p.SquareMeters > 0)
+                             select (Category: buildingsByCategory.Key, Buildings: buildingsByCategory);
 
         foreach (var group in buildingGroups) {
             Console.WriteLine(group.Category);
@@ -261,6 +261,16 @@ Year: 1978
                                                        select new { Day = DayGroup.Key, Employees = DayGroup }
                                             })
                               });
+
+
+        //employees.OrderBy(e => e.BirthDate)
+        //    .GroupBy(e => e.BirthDate.Year)
+        //    .Select(y => (Yer: y.Key, 
+        //                Months: y
+        //                            .GroupBy(m => m.BirthDate.Month)
+        //                            .Select(m => (Month: m.Key, Days: m
+        //                                    .GroupBy(d => d.BirthDate.Day)
+        //                                    .Select(d => (Day: d.Key, Employee: d))))));
 
         foreach (var yeargroup in employeesGroups) {
             Console.WriteLine($"Year: {yeargroup.Year}");

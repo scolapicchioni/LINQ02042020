@@ -89,6 +89,34 @@ public static class LetOperator {
                      DiceRolls = rolls
                  };
 
+        var q1_alternate = players
+            .Select(p => new {
+                p, rolls = p.DiceRolls
+                            .Where(d => d.Item1 + d.Item2 == 7 || d.Item1 + d.Item2 == 11)
+            })
+            .Where(obj => obj.rolls.Any())
+            .Select(obj => new {
+                obj.p.Name,
+                DiceRolls = obj.rolls
+            });
+
+        var q2 = players.Select(p => new {  p, 
+                                            DiceSum = p.DiceRolls
+                                                        .Select(dr => new { Roll = dr, RollTotal = dr.FirstDice + dr.SecondDice })
+                                                        .Where(dr => dr.RollTotal is 11 or 7) 
+                                         })
+                        .Select(obj => (obj.p.Name, obj.DiceSum.Select(r => r.Roll)));
+
+        var q3 = from p in players
+                 let scores = from pr in p.DiceRolls
+                              let score = pr.FirstDice + pr.SecondDice
+                              where score == 7 || score == 11
+                              select pr
+                 where scores.Any()
+                 select (p.Name, DiceRolls: scores);
+
+
+
         foreach (var player in q1) {
             Console.WriteLine(player.Name);
             foreach (var roll in player.DiceRolls) {

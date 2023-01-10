@@ -1,4 +1,8 @@
-﻿namespace DataHelper;
+﻿global using System.Collections.Generic;
+global using System;
+global using System.Linq;
+
+namespace DataHelper;
 
 public static class DataSource {
     static DataSource() {

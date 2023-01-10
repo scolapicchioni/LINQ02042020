@@ -10,9 +10,9 @@ public static class AggregateOperators {
          */
         IEnumerable<Employee> employees = DataSource.Employees;
 
-        //int howManyEMployees = ??
+        int howManyEMployees = employees.Count();
 
-        //Console.WriteLine($"There are {howManyEMployees} employees.");
+        Console.WriteLine($"There are {howManyEMployees} employees.");
     }
 
     public static void CountConditional() {
@@ -21,9 +21,9 @@ public static class AggregateOperators {
          * How many female employees do we have?
          */
 
-        //int howManyEMployees = ??
+        int howManyEMployees = employees.Count(e => e.Gender == 'F');
 
-        //Console.WriteLine($"There are {howManyEMployees} female employees.");
+        Console.WriteLine($"There are {howManyEMployees} female employees.");
     }
 
     public static void SickLeaveHours() {
