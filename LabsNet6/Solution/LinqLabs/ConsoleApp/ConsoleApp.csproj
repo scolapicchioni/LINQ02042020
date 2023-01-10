@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <StartupObject>ConsoleApp.Program</StartupObject>
     <Nullable>enable</Nullable>
   <ImplicitUsings>enable</ImplicitUsings>
@@ -18,6 +18,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DataHelper\DataHelper.csproj" />
+    <ProjectReference Include="..\Shared\Shared.csproj" />
+    <ProjectReference Include="..\TestDataLibrary\TestDataLibrary.csproj" />
   </ItemGroup>
 
 </Project>
